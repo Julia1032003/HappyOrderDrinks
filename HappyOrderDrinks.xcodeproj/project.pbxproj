@@ -13,6 +13,10 @@
 		E1B297892305F7E400343580 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B297872305F7E400343580 /* Main.storyboard */; };
 		E1B2978B2305F7E500343580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B2978A2305F7E500343580 /* Assets.xcassets */; };
 		E1B2978E2305F7E500343580 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B2978C2305F7E500343580 /* LaunchScreen.storyboard */; };
+		E1B2979623060F8A00343580 /* IntroScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B2979523060F8A00343580 /* IntroScrollViewController.swift */; };
+		E1E81B97230A7E8F00D935C8 /* OrderDrinksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */; };
+		E1F54DF0230BC9320027F63D /* TeaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F54DEF230BC9320027F63D /* TeaData.swift */; };
+		E1F54DF8230C2DCD0027F63D /* 可不可.txt in Resources */ = {isa = PBXBuildFile; fileRef = E1F54DF7230C2DCD0027F63D /* 可不可.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		E1B2978A2305F7E500343580 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1B2978D2305F7E500343580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1B2978F2305F7E500343580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2979523060F8A00343580 /* IntroScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScrollViewController.swift; sourceTree = "<group>"; };
+		E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDrinksTableViewController.swift; sourceTree = "<group>"; };
+		E1F54DEF230BC9320027F63D /* TeaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaData.swift; sourceTree = "<group>"; };
+		E1F54DF7230C2DCD0027F63D /* 可不可.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "可不可.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +64,14 @@
 		E1B297802305F7E400343580 /* HappyOrderDrinks */ = {
 			isa = PBXGroup;
 			children = (
+				E1F54DF7230C2DCD0027F63D /* 可不可.txt */,
 				E1B297812305F7E400343580 /* AppDelegate.swift */,
 				E1B297832305F7E400343580 /* SceneDelegate.swift */,
 				E1B297852305F7E400343580 /* ViewController.swift */,
 				E1B297872305F7E400343580 /* Main.storyboard */,
+				E1F54DEF230BC9320027F63D /* TeaData.swift */,
+				E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */,
+				E1B2979523060F8A00343580 /* IntroScrollViewController.swift */,
 				E1B2978A2305F7E500343580 /* Assets.xcassets */,
 				E1B2978C2305F7E500343580 /* LaunchScreen.storyboard */,
 				E1B2978F2305F7E500343580 /* Info.plist */,
@@ -125,6 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F54DF8230C2DCD0027F63D /* 可不可.txt in Resources */,
 				E1B2978E2305F7E500343580 /* LaunchScreen.storyboard in Resources */,
 				E1B2978B2305F7E500343580 /* Assets.xcassets in Resources */,
 				E1B297892305F7E400343580 /* Main.storyboard in Resources */,
@@ -138,8 +151,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1B2979623060F8A00343580 /* IntroScrollViewController.swift in Sources */,
 				E1B297862305F7E400343580 /* ViewController.swift in Sources */,
 				E1B297822305F7E400343580 /* AppDelegate.swift in Sources */,
+				E1E81B97230A7E8F00D935C8 /* OrderDrinksTableViewController.swift in Sources */,
+				E1F54DF0230BC9320027F63D /* TeaData.swift in Sources */,
 				E1B297842305F7E400343580 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
