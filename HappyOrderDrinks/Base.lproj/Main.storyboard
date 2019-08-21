@@ -376,9 +376,6 @@
                                                                 <segment title="大杯"/>
                                                                 <segment title="中杯"/>
                                                             </segments>
-                                                            <connections>
-                                                                <action selector="sizeSelectSegmentedAction:" destination="mKa-zR-6hk" eventType="valueChanged" id="Sdu-ZX-n2E"/>
-                                                            </connections>
                                                         </segmentedControl>
                                                     </subviews>
                                                 </stackView>
@@ -416,9 +413,6 @@
                                                                 <segment title="微糖"/>
                                                                 <segment title="無糖"/>
                                                             </segments>
-                                                            <connections>
-                                                                <action selector="sugarSelectSegmentedAction:" destination="mKa-zR-6hk" eventType="valueChanged" id="53o-TM-3X9"/>
-                                                            </connections>
                                                         </segmentedControl>
                                                     </subviews>
                                                 </stackView>
@@ -585,6 +579,7 @@
                         <outlet property="nameTextField" destination="ehj-Rk-sNl" id="af7-V3-O0X"/>
                         <outlet property="priceLabel" destination="vmF-t8-ZQA" id="tzb-ZD-cdI"/>
                         <outlet property="sizeSegmentedControl" destination="WGm-5Z-G0w" id="T40-WP-7vi"/>
+                        <outlet property="sugarSegmentedControl" destination="IKc-Be-ZPn" id="tXm-vI-QAg"/>
                         <outlet property="tapiocaSwitch" destination="LyV-jc-dPb" id="UTv-sr-lyZ"/>
                     </connections>
                 </tableViewController>

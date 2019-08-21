@@ -59,13 +59,6 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         
     }
     
-    //容量大小控制
-    @IBAction func sizeSelectSegmentedAction(_ sender: Any) {
-        if sizeSegmentedControl.selectedSegmentIndex == 0 {
-           sizeSegmentedControl.selectedSegmentIndex = 1
-                    
-     }
-    }
     
     //加價購白玉珍珠
     @IBAction func tapiocaSelectSwitch(_ sender: UISwitch) {
@@ -75,6 +68,8 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             priceLabel.text = "NT. \(drinksData[teaIndex].price)"
         }
     }
+
+    
     
     //提示訊息
     func showAlertMessage(title: String, message: String) {
@@ -175,7 +170,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             //post所提供的API，Value為物件的陣列（Array），所以利用Dictionary實作
-            let confirmOrder: [String : String] = ["name": teaorder.name, "drinks": teaorder.drinks, "size": teaorder.size, "sugar": teaorder.sugar.rawValue, "ice": teaorder.ice.rawValue, "tapioca": teaorder.tapioca, "message": teaorder.message, "price": teaorder.price]
+            let confirmOrder: [String : String] = ["name": teaorder.name, "drinks": teaorder.drinks, "size": teaorder.size, "sugar": teaorder.sugar.rawValue, "ice": teaorder.ice.rawValue, "tapioca": teaorder.tapioca, "price": teaorder.price, "message": teaorder.message]
             
             //Post API 需要在物件（Object）內設定key值為data, value為一個物件的陣列（Array）
             let postData: [String: Any] = ["data" : confirmOrder]
