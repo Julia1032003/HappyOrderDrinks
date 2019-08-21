@@ -17,7 +17,7 @@ struct TeaChoicesData {
     var sugar: SugarLevel
     var ice: IceLevel
     var message: String
-    var tapioca:Bool
+    var tapioca:String
     
     init() {
             name = ""
@@ -27,7 +27,7 @@ struct TeaChoicesData {
             sugar = .regular
             ice = .regular
             message = ""
-            tapioca = false
+            tapioca = "不加白玉珍珠"
 
     }
 }
