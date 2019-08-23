@@ -28,7 +28,6 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             super.viewDidLoad()
             getTeaMenu()
             updatePriceUI()
-            
         }
     
     
@@ -41,21 +40,24 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
-        //回傳類別
+        //回傳顯示幾個類別的pikcer
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return drinksData.count
-        //回傳飲料名稱數量
+        //回傳顯示飲料名稱數量
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return drinksData[row].name
+     //顯示文字在Picker上，titleForRow為現在要顯示的文字是在Picker上的第幾個，如果剛剛的numberOfComponents()有設定超過1的話，這邊的第三個參數component就可以用來判斷每個component要顯示的文字。
+
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
          teaIndex = row
          updatePriceUI()
+        //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格
         
     }
     
@@ -95,9 +97,9 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             
             //容量資料
             if sizeSegmentedControl.selectedSegmentIndex == 0 {
-                teaorder.size = "中杯"
-            }else {
                 teaorder.size = "大杯"
+            }else {
+                teaorder.size = "中杯"
             }
             print("容量：\(teaorder.size)")
             
@@ -137,10 +139,13 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             }
             print("冰度：\(teaorder.ice.rawValue)")
             
+            //是否加珍珠
             if tapiocaSwitch.isOn {
-               print("加購白玉珍珠")
+               teaorder.tapioca = "要加珍珠"
             }else {
-               print("不加購白玉珍珠")
+               teaorder.tapioca = "不加珍珠"
+            }
+            print("是否加購：\(teaorder.size)")
              
             //價格資料
             if let price = priceLabel.text {
@@ -157,7 +162,6 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
           
         }
     
-    }
     
     //傳送訂單資料至sheetDB
     func sendDrinksOrderToServer() {

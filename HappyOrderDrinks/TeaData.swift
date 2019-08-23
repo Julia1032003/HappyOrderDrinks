@@ -21,13 +21,13 @@ struct TeaChoicesData {
     
     init() {
             name = ""
-            drinks = "冰茉香綠茶"
-            price = "40"
-            size = "中杯"
+            drinks = ""
+            price = ""
+            size = ""
             sugar = .regular
             ice = .regular
             message = ""
-            tapioca = "不加白玉珍珠"
+            tapioca = ""
 
     }
 }
@@ -46,3 +46,41 @@ enum SugarLevel:String{
 enum IceLevel:String{
     case regular = "正常", moreIce = "少冰", easyIce = "微冰", iceFree = "去冰", completelyiceFree = "完全去冰", hot = "熱飲"
 }
+
+struct DrinksInformation {
+    var name: String
+    var drinks: String
+    var size: String
+    var sugar: String
+    var ice: String
+    var tapioca: String
+    var price: String
+    var message: String
+        
+        
+    init?(json: [String : Any]) {
+        guard let name = json["name"] as? String,
+            let drinks = json["drinks"] as? String,
+            let size = json["size"] as? String,
+            let sugar = json["sugar"] as? String,
+            let ice = json["ice"] as? String,
+            let tapioca = json["tapioca"] as? String,
+            let price = json["price"] as? String,
+            let message = json["message"] as? String
+                
+            else {
+                return nil
+            }
+            self.name = name
+            self.drinks = drinks
+            self.size = size
+            self.sugar = sugar
+            self.ice = ice
+            self.tapioca = tapioca
+            self.price = price
+            self.message = message
+         
+    }
+        
+}
+
