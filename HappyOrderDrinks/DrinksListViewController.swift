@@ -13,7 +13,9 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
     @IBOutlet var drinksListTableView: UITableView!
     @IBOutlet var numberOfDrinksLabel: UILabel!
     @IBOutlet var totalPriceLabel: UILabel!
+    
     var ListArray = [DrinksInformation]()
+    var drinks = [DrinksInformation]()
         
         func updatePriceUI() {
                 var price = 0
@@ -31,10 +33,12 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
             }
 
             
+    //得到要顯示的Cell，設定Cell的內容
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ListArray.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let information = ListArray[indexPath.row]
@@ -54,8 +58,6 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         drinksListTableView.delegate = self
         drinksListTableView.dataSource = self
         getOrderList()
-        
-
         // Do any additional setup after loading the view.
     }
     
@@ -64,6 +66,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 // Dispose of any resources that can be recreated.
             }
     
+    //取得訂單資料
     func getOrderList(){
                 let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 // 將網址轉換成URL編碼（Percent-Encoding）
@@ -79,11 +82,11 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                                 self.ListArray.append(data)
                             }
                         }
-        //              print(self.orderArray) // Debug用顯示所有抓取的資料
+
                         
                         // UI的更新必須在Main thread
                         DispatchQueue.main.async {
-                            //self.stopLoading() //停止Loading動畫並且關閉不顯示
+                            //更新TableView
                             self.drinksListTableView.reloadData()    // 更新訂購表
                             self.updateOrdersUI() // 更新訂購數量
                             self.updatePriceUI() // 更新總價
@@ -92,6 +95,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 }
                 task.resume() // 開始在背景下載資料
     }
+
     /*
     // MARK: - Navigation
 

@@ -26,11 +26,44 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     
     override func viewDidLoad() {
             super.viewDidLoad()
-            getTeaMenu()
-            updatePriceUI()
+            getTeaMenu() //載入飲料menu
+            updatePriceUI() //更新飲料價格
         }
     
-   
+    
+     // 開啟飲料txt檔，並將資料讀取出來
+    func getTeaMenu() {
+                if let url = Bundle.main.url(forResource: "可不可", withExtension: "txt"), let content = try? String(contentsOf: url) {
+                    let menuArray = content.components(separatedBy: "\n")  //利用components將換行移除
+                    for number in 0 ..< menuArray.count {
+                                    if number % 2 == 0 {
+                                        let name = menuArray[number]
+                                        if let price = Int(menuArray[number + 1]) {
+                                                drinksData.append(DrinksList(name: name, price: price))
+                                        }else {
+                                            print("轉型失敗")
+                                        }
+                                        
+                                    }
+                                }
+                    }
+             }
+    
+    
+    //更新PickerView
+    func updatePickerUI(row:Int){
+            //讓pickerview顯示選定的項目
+            drinksPicker.selectRow(row, inComponent: 0, animated: true)
+            teaIndex = row
+        }
+    
+    //更新價格等同於選定的項目價格
+    func updatePriceUI() {
+             priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+        }
+    
+    
+   //PickerView的設定
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
         //回傳顯示幾個類別的pikcer
@@ -53,6 +86,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格
         
     }
+    
   
     //加價購白玉珍珠
     @IBAction func tapiocaSelectSwitch(_ sender: UISwitch) {
@@ -190,50 +224,19 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             catch{
             }
         }
-    
-    func updatePickerUI(row:Int){
-        //讓pickerview顯示選定的項目
-        drinksPicker.selectRow(row, inComponent: 0, animated: true)
-        teaIndex = row
-    }
-    
-    func updatePriceUI() {
-         //更新價格等同於選定的項目價格
-         priceLabel.text = "NT. \(drinksData[teaIndex].price)"
-    }
-    
 
+    //按下確認Button後呼叫取得訂單資料function並呼叫傳送訂單資料function傳送至sheetDB
     @IBAction func confirmButton(_ sender: Any) {
         getOrder()
         sendDrinksOrderToServer()
     }
     
+    
     override func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()
             // Dispose of any resources that can be recreated.
         }
-    
-    
-    func getTeaMenu() {
-        if let url = Bundle.main.url(forResource: "可不可", withExtension: "txt"), let content = try? String(contentsOf: url) {
-            // 開啟飲料txt檔，並將資料讀取出來
-            let menuArray = content.components(separatedBy: "\n")  //利用components將換行移除
-            for number in 0 ..< menuArray.count {
-                            if number % 2 == 0 {
-                                let name = menuArray[number]
-                                if let price = Int(menuArray[number + 1]) {
-                                        drinksData.append(DrinksList(name: name, price: price))
-                                }else {
-                                    print("轉型失敗")
-                                }
-                                
-                            }
-                        }
-            }
-     }
         
-        
-    
     // MARK: - Table view data source
 
     /*override func numberOfSections(in tableView: UITableView) -> Int {

@@ -47,7 +47,7 @@ enum IceLevel:String{
     case regular = "正常", moreIce = "少冰", easyIce = "微冰", iceFree = "去冰", completelyiceFree = "完全去冰", hot = "熱飲"
 }
 
-struct DrinksInformation {
+struct DrinksInformation : Codable{
     var name: String
     var drinks: String
     var size: String
@@ -81,6 +81,8 @@ struct DrinksInformation {
             self.message = message
          
     }
-        
+    
 }
+
+    
 
