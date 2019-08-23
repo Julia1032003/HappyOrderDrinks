@@ -54,6 +54,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         drinksListTableView.delegate = self
         drinksListTableView.dataSource = self
         getOrderList()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -80,10 +81,11 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                         }
         //              print(self.orderArray) // Debug用顯示所有抓取的資料
                         
-                        DispatchQueue.main.async {  // UI的更新必須在Main thread
+                        // UI的更新必須在Main thread
+                        DispatchQueue.main.async {
                             //self.stopLoading() //停止Loading動畫並且關閉不顯示
                             self.drinksListTableView.reloadData()    // 更新訂購表
-                            //self.updateOrdersUI() // 更新訂購數量
+                            self.updateOrdersUI() // 更新訂購數量
                             self.updatePriceUI() // 更新總價
                         }
                     }

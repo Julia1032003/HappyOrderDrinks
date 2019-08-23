@@ -30,14 +30,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             updatePriceUI()
         }
     
-    
-
-    /*func updatePickerView(row: Int) {
-        // 讓pickerView顯示選定的index項目
-        drinksPicker.selectRow(row, inComponent: 0, animated: true)
-        teaIndex = row
-        }*/
-    
+   
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
         //回傳顯示幾個類別的pikcer
@@ -60,8 +53,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格
         
     }
-    
-    
+  
     //加價購白玉珍珠
     @IBAction func tapiocaSelectSwitch(_ sender: UISwitch) {
         if sender.isOn{
@@ -71,6 +63,15 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         }
     }
 
+    
+    //亂數選飲料
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if event?.subtype == .motionShake{
+            let row = Int.random(in: 0 ..< drinksData.count)
+            updatePickerUI(row: row)
+            updatePriceUI()
+        }
+    }
     
     
     //提示訊息
@@ -190,7 +191,14 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             }
         }
     
+    func updatePickerUI(row:Int){
+        //讓pickerview顯示選定的項目
+        drinksPicker.selectRow(row, inComponent: 0, animated: true)
+        teaIndex = row
+    }
+    
     func updatePriceUI() {
+         //更新價格等同於選定的項目價格
          priceLabel.text = "NT. \(drinksData[teaIndex].price)"
     }
     
