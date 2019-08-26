@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Order:Encodable {
+    var drinksdata:DrinksInformation
+}
+
+
 class DrinksListViewController: UIViewController , UITableViewDataSource , UITableViewDelegate {
     
     @IBOutlet var drinksListTableView: UITableView!
@@ -15,9 +20,9 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
     @IBOutlet var totalPriceLabel: UILabel!
     
     var ListArray = [DrinksInformation]()
-    var drinks = [DrinksInformation]()
         
-        func updatePriceUI() {
+    //訂單總金額統計
+    func updatePriceUI() {
                 var price = 0
                 
                 for i in 0 ..< ListArray.count {
@@ -28,8 +33,9 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 totalPriceLabel.text = "\(price)"
             }
     
-        func updateOrdersUI(){
-                numberOfDrinksLabel.text = "\(ListArray.count)"
+    //訂單總杯數統計
+    func updateOrdersUI(){
+            numberOfDrinksLabel.text = "\(ListArray.count)"
             }
 
             
@@ -50,6 +56,17 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         cell.updateUI(id: indexPath.row)
         return cell
 
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let drinks = ListArray[indexPath.row]
+        //let deletePrince = (ListArray[indexPath.row].price)
+        deleteOrderList(ListArray: drinks)
+        ListArray.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.reloadData()
+        updatePriceUI()
+        updateOrdersUI()
     }
     
 
@@ -94,6 +111,30 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                     }
                 }
                 task.resume() // 開始在背景下載資料
+    }
+    
+    func deleteOrderList(ListArray:DrinksInformation){
+       if let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0/name/\(ListArray.name)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStr){
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = "DELETE"
+            urlRequest.setValue("applicatino/json", forHTTPHeaderField: "Content-Type")
+            let List = Order(drinksdata: ListArray)
+            let jsonEncoder = JSONEncoder()
+            if let data = try? jsonEncoder.encode(List){
+                let task = URLSession.shared.uploadTask(with: urlRequest, from: data){(retData,response, error)in
+                    let decoder = JSONDecoder()
+                    if let retData = retData , let dic = try? decoder.decode([String:Int].self, from:retData),dic["deleted"] == 1{
+                        print("Successfully deleted")
+                    }else{
+                        print("Failed to delete")
+                    }
+                }
+                task.resume()
+            }else{
+                print("Delete")
+            }
+            
+        }
     }
 
     /*
