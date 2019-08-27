@@ -40,7 +40,6 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
 
             
     //得到要顯示的Cell，設定Cell的內容
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ListArray.count
     }
@@ -58,9 +57,9 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
 
     }
     
+    //刪除cell資料
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let drinks = ListArray[indexPath.row]
-        //let deletePrince = (ListArray[indexPath.row].price)
         deleteOrderList(ListArray: drinks)
         ListArray.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -69,7 +68,13 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         updateOrdersUI()
     }
     
-
+    //修改cell資料
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showedit", sender: indexPath)
+    }
+    
+    
+    //畫面載入，取得訂單資料
     override func viewDidLoad() {
         super.viewDidLoad()
         drinksListTableView.delegate = self
@@ -83,7 +88,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 // Dispose of any resources that can be recreated.
             }
     
-    //取得訂單資料
+    //取得sheetDB訂單資料
     func getOrderList(){
                 let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 // 將網址轉換成URL編碼（Percent-Encoding）
@@ -113,6 +118,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 task.resume() // 開始在背景下載資料
     }
     
+    //刪除sheetDB訂單資料
     func deleteOrderList(ListArray:DrinksInformation){
        if let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0/name/\(ListArray.name)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStr){
             var urlRequest = URLRequest(url: url)
@@ -137,6 +143,38 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         }
     }
 
+    //修改sheetDB訂單資料
+        func changeOrderList(ListArray:DrinksInformation){
+           if let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0/name/\(ListArray.name)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStr){
+                var urlRequest = URLRequest(url: url)
+                urlRequest.httpMethod = "PUT"
+                urlRequest.setValue("applicatino/json", forHTTPHeaderField: "Content-Type")
+                let List = Order(drinksdata: ListArray)
+                let jsonEncoder = JSONEncoder()
+                if let data = try? jsonEncoder.encode(List){
+                    let task = URLSession.shared.uploadTask(with: urlRequest, from: data){(retData,response, error)in
+                        let decoder = JSONDecoder()
+                        if let retData = retData , let dic = try? decoder.decode([String:Int].self, from:retData),dic["deleted"] == 1{
+                            print("Successfully change")
+                        }else{
+                            print("Failed to change")
+                        }
+                    }
+                    task.resume()
+                }else{
+                    print("change")
+                }
+                
+            }
+        }
+    
+    override func prepare(for segue:UIStoryboardSegue, sender: Any?){
+        if let controller = segue.destination as? OrderDrinksTableViewController , let row = tableView.indexPathForSelectedRow?.row{
+            controller.ListArray = ListArray[row]
+        }
+        
+    }
+    
     /*
     // MARK: - Navigation
 

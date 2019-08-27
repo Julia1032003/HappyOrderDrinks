@@ -23,6 +23,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     var teaorder = TeaChoicesData ()
     var drinksData : [DrinksList] = []
     var teaIndex = 0
+    var drinksPrice = Int()
     
     override func viewDidLoad() {
             super.viewDidLoad()
@@ -59,9 +60,8 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     
     //更新價格等同於選定的項目價格
     func updatePriceUI() {
-             priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+            priceLabel.text = "NT. \(drinksData[teaIndex].price)"
         }
-    
     
    //PickerView的設定
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -87,13 +87,22 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         
     }
     
-  
+    //容量大小的金額
+    @IBAction func sizeSelectSegmentedControl(_ sender: UISegmentedControl) {
+            if sizeSegmentedControl.selectedSegmentIndex == 0 && drinksData.count >= 15 {
+                drinksPrice = drinksData[teaIndex].price+10
+            }else{
+                drinksPrice = drinksData[teaIndex].price+5
+            }
+            priceLabel.text = "NT. \(drinksPrice)"
+    }
+
     //加價購白玉珍珠
     @IBAction func tapiocaSelectSwitch(_ sender: UISwitch) {
         if sender.isOn{
-            priceLabel.text = "NT. \(drinksData[teaIndex].price+10)"
+            priceLabel.text = "NT. \(drinksPrice+10)"
         }else{
-            priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+            priceLabel.text = "NT. \(drinksPrice)"
         }
     }
 
@@ -197,6 +206,14 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
           
         }
     
+    @IBAction func closeKeyin(_ sender: Any) {
+    }
+    
+    //收螢幕鍵盤
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     
     //傳送訂單資料至sheetDB
     func sendDrinksOrderToServer() {
@@ -229,6 +246,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     @IBAction func confirmButton(_ sender: Any) {
         getOrder()
         sendDrinksOrderToServer()
+        return showAlertMessage(title: "訂購成功",message: "快去訂單明細檢查一下")
     }
     
     
