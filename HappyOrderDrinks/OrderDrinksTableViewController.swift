@@ -19,12 +19,15 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     @IBOutlet var iceSegmentedControl: UISegmentedControl!
     @IBOutlet var messageTextField: UITextField!
     @IBOutlet var tapiocaSwitch: UISwitch!
+
     
     var teaorder = TeaChoicesData ()
     var drinksData : [DrinksList] = []
     var teaIndex = 0
     var drinksPrice = Int()
     var editOrderData: DrinksInformation?
+   
+    
     
     //載入訂購飲料的頁面，判斷呈現什麼畫面
     override func viewDidLoad() {
@@ -69,6 +72,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     func editOrderList(){
         nameTextField.text = editOrderData?.name
         updateDrinksPickerView(name: editOrderData!.drinks)
+        priceLabel.text = editOrderData?.price
         sizeSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.size)
         sugarSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.sugar)
         iceSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.ice)
@@ -98,11 +102,13 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     
     // 找出飲料在列表中的index
     func updateDrinksPickerView(name: String) {
+            getTeaMenu()
             for (i, drinks) in drinksData.enumerated() {
                 if drinks.name == name {
                     updatePickerUI(row: i)
                     break
                 }
+                 print("ok")
             }
         }
     
@@ -178,7 +184,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             self.present(inputErrorAlert, animated: true, completion: nil) // 顯示Alert
     }
         
-    //訂單內容
+    //取得訂單內容
     func getOrder() {
         guard let name = nameTextField.text, name.count > 0 else{   // 檢查姓名是否輸入
         return showAlertMessage(title: "忘記輸入你的名字囉!",message: "沒寫名字怎麼知道是誰點的啦XD")    // 顯示必須輸入的提示訊息
@@ -292,11 +298,14 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             catch{
             }
         }
+    
 
-    //按下確認Button後呼叫取得訂單資料function並呼叫傳送訂單資料function傳送至sheetDB
+
+//按下確認Button後呼叫取得訂單資料function並呼叫傳送訂單資料function傳送至sheetDB
     @IBAction func confirmButton(_ sender: Any) {
         getOrder()
         sendDrinksOrderToServer()
+        print("已新增")
         return showAlertMessage(title: "訂購成功",message: "快去訂單明細檢查一下")
     }
     

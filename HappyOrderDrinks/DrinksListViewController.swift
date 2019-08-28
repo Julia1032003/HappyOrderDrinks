@@ -74,10 +74,16 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
     //畫面載入，取得訂單資料
     override func viewDidLoad() {
         super.viewDidLoad()
+        startLoadingList()
         drinksListTableView.delegate = self
         drinksListTableView.dataSource = self
         getOrderList()
         // Do any additional setup after loading the view.
+    }
+    
+    //開始載入動畫
+    func startLoadingList(){
+        loadingActivityIndicator.startAnimating()
     }
     
     //停止載入動畫
@@ -140,31 +146,7 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
             
         }
     }
-
-    //修改sheetDB訂單資料
-        func changeOrderList(ListArray:DrinksInformation){
-           if let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0/name/\(ListArray.name)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStr){
-                var urlRequest = URLRequest(url: url)
-                urlRequest.httpMethod = "PUT"
-                urlRequest.setValue("applicatino/json", forHTTPHeaderField: "Content-Type")
-                let List = Order(drinksdata: ListArray)
-                let jsonEncoder = JSONEncoder()
-                if let data = try? jsonEncoder.encode(List){
-                    let task = URLSession.shared.uploadTask(with: urlRequest, from: data){(retData,response, error)in
-                        let decoder = JSONDecoder()
-                        if let retData = retData , let dic = try? decoder.decode([String:Int].self, from:retData),dic["deleted"] == 1{
-                            print("Successfully change")
-                        }else{
-                            print("Failed to change")
-                        }
-                    }
-                    task.resume()
-                }else{
-                    print("change")
-                }
-                
-            }
-        }
+    
      //修改cell資料，將飲料訂單cell裡的資料存到下一頁的訂購飲料頁面
     override func prepare(for segue:UIStoryboardSegue, sender: Any?){
         if let controller = segue.destination as? OrderDrinksTableViewController, let row = drinksListTableView.indexPathForSelectedRow?.row  {
