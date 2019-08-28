@@ -24,44 +24,96 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     var drinksData : [DrinksList] = []
     var teaIndex = 0
     var drinksPrice = Int()
+    var editOrderData: DrinksInformation?
     
+    //載入訂購飲料的頁面，判斷呈現什麼畫面
     override func viewDidLoad() {
             super.viewDidLoad()
+        
+        //若飲料訂單資料不是空值則載入飲料訂單資料
+        if editOrderData != nil{
+            editOrderList()
+            
+        }else{
+            
+        //若飲料訂單為空值則載入飲料menu
             getTeaMenu() //載入飲料menu
             updatePriceUI() //更新飲料價格
         }
+    }
     
-    
-     // 開啟飲料txt檔，並將資料讀取出來
-    func getTeaMenu() {
-                if let url = Bundle.main.url(forResource: "可不可", withExtension: "txt"), let content = try? String(contentsOf: url) {
-                    let menuArray = content.components(separatedBy: "\n")  //利用components將換行移除
-                    for number in 0 ..< menuArray.count {
-                                    if number % 2 == 0 {
-                                        let name = menuArray[number]
-                                        if let price = Int(menuArray[number + 1]) {
-                                                drinksData.append(DrinksList(name: name, price: price))
-                                        }else {
-                                            print("轉型失敗")
+    // 開啟飲料txt檔，並將資料讀取出來
+        func getTeaMenu() {
+                    if let url = Bundle.main.url(forResource: "可不可", withExtension: "txt"), let content = try? String(contentsOf: url) {
+                        let menuArray = content.components(separatedBy: "\n")  //利用components將換行移除
+                        for number in 0 ..< menuArray.count {
+                                        if number % 2 == 0 {
+                                            let name = menuArray[number]
+                                            if let price = Int(menuArray[number + 1]) {
+                                                    drinksData.append(DrinksList(name: name, price: price))
+                                            }else {
+                                                print("轉型失敗")
+                                            }
+                                            
                                         }
-                                        
                                     }
-                                }
-                    }
-             }
+                        }
+                 }
     
+    //更新價格等同於選定的項目價格
+        func updatePriceUI() {
+                priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+            }
+        
+    //載入飲料訂單的資料
+    func editOrderList(){
+        nameTextField.text = editOrderData?.name
+        updateDrinksPickerView(name: editOrderData!.drinks)
+        sizeSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.size)
+        sugarSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.sugar)
+        iceSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.ice)
+        tapiocaSwitch.isOn = editOrderData?.tapioca == "要加珍珠" ? true : false
+        messageTextField.text = editOrderData?.message
+    }
     
+    //轉換容量、甜度及冰度字串資料
+    func convertStringToIndex(str: String) -> Int {
+            switch str {
+            case "大杯", "正常":
+                return 0
+            case "中杯", "少糖", "少冰":
+                return 1
+            case "半糖", "微冰":
+                return 2
+            case "微糖", "去冰":
+                return 3
+            case "無糖", "完全去冰":
+                return 4
+            case "熱飲":
+                return 5
+            default:
+                return 0
+            }
+        }
+    
+    // 找出飲料在列表中的index
+    func updateDrinksPickerView(name: String) {
+            for (i, drinks) in drinksData.enumerated() {
+                if drinks.name == name {
+                    updatePickerUI(row: i)
+                    break
+                }
+            }
+        }
+    
+     
     //更新PickerView
     func updatePickerUI(row:Int){
             //讓pickerview顯示選定的項目
             drinksPicker.selectRow(row, inComponent: 0, animated: true)
             teaIndex = row
         }
-    
-    //更新價格等同於選定的項目價格
-    func updatePriceUI() {
-            priceLabel.text = "NT. \(drinksData[teaIndex].price)"
-        }
+
     
    //PickerView的設定
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -84,6 +136,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
          teaIndex = row
          updatePriceUI()
         //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格
+        
         
     }
     
@@ -206,14 +259,12 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
           
         }
     
+    //點擊return收鍵盤
     @IBAction func closeKeyin(_ sender: Any) {
     }
     
-    //收螢幕鍵盤
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    @IBAction func messageCloseKeyin(_ sender: Any) {
     }
-    
     
     //傳送訂單資料至sheetDB
     func sendDrinksOrderToServer() {

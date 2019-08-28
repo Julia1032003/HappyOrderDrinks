@@ -8,16 +8,13 @@
 
 import UIKit
 
-struct Order:Encodable {
-    var drinksdata:DrinksInformation
-}
-
-
 class DrinksListViewController: UIViewController , UITableViewDataSource , UITableViewDelegate {
     
     @IBOutlet var drinksListTableView: UITableView!
     @IBOutlet var numberOfDrinksLabel: UILabel!
     @IBOutlet var totalPriceLabel: UILabel!
+    @IBOutlet var loadingActivityIndicator: UIActivityIndicatorView!
+    
     
     var ListArray = [DrinksInformation]()
         
@@ -83,10 +80,10 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         // Do any additional setup after loading the view.
     }
     
-    override func didReceiveMemoryWarning() {
-                super.didReceiveMemoryWarning()
-                // Dispose of any resources that can be recreated.
-            }
+    //停止載入動畫
+    func stopLoadingList(){
+        loadingActivityIndicator.stopAnimating()
+    }
     
     //取得sheetDB訂單資料
     func getOrderList(){
@@ -106,10 +103,11 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                         }
 
                         
-                        // UI的更新必須在Main thread
+                        // 更新TableView，UI的更新必須在Main thread
                         DispatchQueue.main.async {
-                            //更新TableView
-                            self.drinksListTableView.reloadData()    // 更新訂購表
+                            self.stopLoadingList() //停止Loading動畫並且關閉圖示
+                            self.loadingActivityIndicator.alpha = 0
+                            self.drinksListTableView.reloadData() // 更新訂購表
                             self.updateOrdersUI() // 更新訂購數量
                             self.updatePriceUI() // 更新總價
                         }
@@ -167,13 +165,19 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                 
             }
         }
-    
+     //修改cell資料，將飲料訂單cell裡的資料存到下一頁的訂購飲料頁面
     override func prepare(for segue:UIStoryboardSegue, sender: Any?){
-        if let controller = segue.destination as? OrderDrinksTableViewController , let row = tableView.indexPathForSelectedRow?.row{
-            controller.ListArray = ListArray[row]
+        if let controller = segue.destination as? OrderDrinksTableViewController, let row = drinksListTableView.indexPathForSelectedRow?.row  {
+           let editOrderData = ListArray[row]
+           controller.editOrderData = editOrderData
+            
         }
-        
     }
+    
+    override func didReceiveMemoryWarning() {
+                    super.didReceiveMemoryWarning()
+                    // Dispose of any resources that can be recreated.
+                }
     
     /*
     // MARK: - Navigation

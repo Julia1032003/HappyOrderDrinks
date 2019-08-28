@@ -8,6 +8,15 @@
 
 import Foundation
 
+
+//讀取可不可.txt用的
+struct DrinksList {
+    var name: String
+    var price: Int
+
+}
+
+//讀取訂單內容用的
 struct TeaChoicesData {
     
     var name: String
@@ -32,12 +41,6 @@ struct TeaChoicesData {
     }
 }
 
-struct DrinksList {
-    var name: String
-    var price: Int
-
-}
-
 enum SugarLevel:String{
     case regular = "正常", lessSuger = "少糖", halfSuger = "半糖", quarterSuger = "微糖", sugerFree = "無糖"
     
@@ -47,6 +50,7 @@ enum IceLevel:String{
     case regular = "正常", moreIce = "少冰", easyIce = "微冰", iceFree = "去冰", completelyiceFree = "完全去冰", hot = "熱飲"
 }
 
+//顯示cell資料、上傳及下載sheetDB及下載資料用的
 struct DrinksInformation : Codable{
     var name: String
     var drinks: String
@@ -82,6 +86,11 @@ struct DrinksInformation : Codable{
          
     }
     
+}
+
+//刪除及修改sheetDB資料用的
+struct Order:Encodable {
+    var drinksdata:DrinksInformation
 }
 
     
