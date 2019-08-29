@@ -189,14 +189,46 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Cug-cH-BOs">
-                                <rect key="frame" x="20" y="150" width="374" height="500"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="600"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSe-iF-YXU">
+                                <rect key="frame" x="272" y="702" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="mobile-phone"/>
+                                <connections>
+                                    <action selector="callActionButton:" destination="ZHm-in-Dv0" eventType="touchUpInside" id="pgD-uD-yrg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="台北市中山區伊通街47號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOv-gb-yKm">
+                                <rect key="frame" x="20" y="736" width="204.5" height="21.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="電話：02-2517-5510" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xz1-pv-bXt">
+                                <rect key="frame" x="20" y="770" width="172" height="21.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="可不可熟成紅茶台北伊通店" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofL-j6-xmk">
+                                <rect key="frame" x="20" y="702" width="220.5" height="21.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="yH2-Ih-Ptu"/>
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="Map" image="map" catalog="system" id="HTV-Mh-3vH"/>
+                    <connections>
+                        <outlet property="drinksStoreMKView" destination="Cug-cH-BOs" id="WKF-4o-anl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2hJ-bj-C01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -376,7 +408,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WLO-Wk-FSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="251" y="850"/>
+            <point key="canvasLocation" x="938" y="850"/>
         </scene>
         <!--訂購飲料-->
         <scene sceneID="mey-6a-GGh">
@@ -737,7 +769,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4r-DJ-4Ta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="938" y="850"/>
+            <point key="canvasLocation" x="1758" y="850"/>
         </scene>
         <!--Home-->
         <scene sceneID="8La-Dy-HfB">
@@ -756,7 +788,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m35-t7-Hpk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="126"/>
+            <point key="canvasLocation" x="206" y="126"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Ehj-Wk-Wc6">
@@ -776,7 +808,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u2F-KC-U0k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-513" y="126"/>
+            <point key="canvasLocation" x="-587" y="126"/>
         </scene>
         <!--Order List-->
         <scene sceneID="LnR-xi-ePw">
@@ -795,7 +827,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvd-gi-yjB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-513" y="850"/>
+            <point key="canvasLocation" x="206" y="850"/>
         </scene>
     </scenes>
     <resources>
@@ -819,9 +851,10 @@
         <image name="kebukelogo9" width="388" height="550"/>
         <image name="list.dash" catalog="system" width="64" height="44"/>
         <image name="map" catalog="system" width="64" height="58"/>
+        <image name="mobile-phone" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="o7X-Mg-iBb"/>
-        <segue reference="92O-ne-XGh"/>
+        <segue reference="1ei-Pz-QUT"/>
     </inferredMetricsTieBreakers>
 </document>
