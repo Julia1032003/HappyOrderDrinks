@@ -19,14 +19,16 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     @IBOutlet var iceSegmentedControl: UISegmentedControl!
     @IBOutlet var messageTextField: UITextField!
     @IBOutlet var tapiocaSwitch: UISwitch!
-
+    
+    @IBOutlet var orderButtonUI: UIButton!
+    @IBOutlet var editButtonUI: UIButton!
+    
     
     var teaorder = TeaChoicesData ()
     var drinksData : [DrinksList] = []
     var teaIndex = 0
     var drinksPrice = Int()
     var editOrderData: DrinksInformation?
-   
     
     
     //載入訂購飲料的頁面，判斷呈現什麼畫面
@@ -35,13 +37,16 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         
         //若飲料訂單資料不是空值則載入飲料訂單資料
         if editOrderData != nil{
-            editOrderList()
+           editOrderList()
+           orderButtonUI.alpha = 0
             
         }else{
             
         //若飲料訂單為空值則載入飲料menu
             getTeaMenu() //載入飲料menu
             updatePriceUI() //更新飲料價格
+            editButtonUI.alpha = 0
+            
         }
     }
     
@@ -186,10 +191,10 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         
     //取得訂單內容
     func getOrder() {
-        guard let name = nameTextField.text, name.count > 0 else{   // 檢查姓名是否輸入
-        return showAlertMessage(title: "忘記輸入你的名字囉!",message: "沒寫名字怎麼知道是誰點的啦XD")    // 顯示必須輸入的提示訊息
-    }
-            
+           guard let name = nameTextField.text, name.count > 0 else{   // 檢查姓名是否輸入
+                    return showAlertMessage(title: "忘記輸入你的名字囉!",message: "沒寫名字怎麼知道是誰點的啦XD")    // 顯示必須輸入的提示訊息
+           }
+                        
             //姓名資料
             teaorder.name = name
             print("訂購人：\(name)")
@@ -265,6 +270,87 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
           
         }
     
+    //取得修改後的訂單內容
+    func getEditOrder() {
+            guard let name = nameTextField.text, name.count > 0 else{   // 檢查姓名是否輸入
+                    return showAlertMessage(title: "忘記輸入你的名字囉!",message: "沒寫名字怎麼知道是誰點的啦XD")    // 顯示必須輸入的提示訊息
+            }
+                                       
+                //姓名資料
+                teaorder.name = name
+                print("訂購人：\(name)")
+                
+                //飲料資料
+                teaorder.drinks = drinksData[teaIndex].name
+                print("飲料品項：\(teaorder.drinks)")
+                
+                //容量資料
+                if sizeSegmentedControl.selectedSegmentIndex == 0 {
+                    teaorder.size = "大杯"
+                }else {
+                    teaorder.size = "中杯"
+                }
+                print("容量：\(teaorder.size)")
+                
+                //甜度資料
+                switch sugarSegmentedControl.selectedSegmentIndex {
+                case 0:
+                    teaorder.sugar = .regular
+                case 1:
+                    teaorder.sugar = .lessSuger
+                case 2:
+                    teaorder.sugar = .halfSuger
+                case 3:
+                    teaorder.sugar = .quarterSuger
+                case 4:
+                    teaorder.sugar = .sugerFree
+                default:
+                    break
+                }
+                print("甜度：\(teaorder.sugar.rawValue)")
+                
+                //冰度資料
+                switch iceSegmentedControl.selectedSegmentIndex {
+                case 0:
+                    teaorder.ice = .regular
+                case 1:
+                    teaorder.ice = .moreIce
+                case 2:
+                    teaorder.ice = .easyIce
+                case 3:
+                    teaorder.ice = .iceFree
+                case 4:
+                    teaorder.ice = .completelyiceFree
+                case 5:
+                    teaorder.ice = .hot
+                default:
+                    break
+                }
+                print("冰度：\(teaorder.ice.rawValue)")
+                
+                //是否加珍珠
+                if tapiocaSwitch.isOn {
+                   teaorder.tapioca = "要加珍珠"
+                }else {
+                   teaorder.tapioca = "不加珍珠"
+                }
+                print("是否加購：\(teaorder.size)")
+                 
+                //價格資料
+                if let price = priceLabel.text {
+                                let money = (price as NSString).substring(from: 4) //因為顯示時有加上NT. ，所以移除後上傳
+                                teaorder.price = money
+                            }
+                            print("價格：\(teaorder.price)")
+                
+                //留言欄
+                if let message = messageTextField.text {
+                    teaorder.message = message
+                    print("備註：\(message)")
+                }
+              
+            }
+    
     //點擊return收鍵盤
     @IBAction func closeKeyin(_ sender: Any) {
     }
@@ -299,16 +385,48 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             }
         }
     
+    //傳送修改後的訂單資料至sheetDB
+        func sendEditDrinksOrderToServer() {
+            
+                //PUT的API需要知道上傳的資料是什麼格式，所以依照API Documentation的規定設定
+                let url = URL(string: "https://sheetdb.io/api/v1/co2xognew7ev0/name/\(teaorder.name)")
+                var urlRequest = URLRequest(url: url!)
+                // 上傳資料所以設定為PUT
+                urlRequest.httpMethod = "PUT"
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                //PUT所提供的API，Value為物件的陣列（Array），所以利用Dictionary實作
+                let confirmOrder: [String : String] = ["name": teaorder.name, "drinks": teaorder.drinks, "size": teaorder.size, "sugar": teaorder.sugar.rawValue, "ice": teaorder.ice.rawValue, "tapioca": teaorder.tapioca, "price": teaorder.price, "message": teaorder.message]
+                
+                //PUT API 需要在物件（Object）內設定key值為data, value為一個物件的陣列（Array）
+                let postData: [String: Any] = ["data" : confirmOrder]
+                
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: postData, options: []) // 將Data轉為JSON格式
+                    let task = URLSession.shared.uploadTask(with: urlRequest, from: data) { (retData, res, err) in // 背景上傳資料
+                        NotificationCenter.default.post(name: Notification.Name("waitMessage"), object: nil, userInfo: ["message": true])
+                    }
+                    task.resume()
+                }
+                catch{
+                }
+            }
 
-
-//按下確認Button後呼叫取得訂單資料function並呼叫傳送訂單資料function傳送至sheetDB
+   //傳送訂單資料至sheetDB
     @IBAction func confirmButton(_ sender: Any) {
-        getOrder()
-        sendDrinksOrderToServer()
-        print("已新增")
-        return showAlertMessage(title: "訂購成功",message: "快去訂單明細檢查一下")
+        getOrder() //取得訂單資料
+        sendDrinksOrderToServer() //傳送資料至sheetDB
+        print("已新增") //檢查用
+        return showAlertMessage(title: "訂購成功",message: "快去訂單明細檢查一下") //完成傳送提示訊息
     }
     
+    //傳送修改後的訂單資料至sheetDB
+    @IBAction func editconfirmButton(_ sender: Any) {
+        getEditOrder() //取得修改後訂單資料
+        sendEditDrinksOrderToServer() //傳送修改完成資料至sheetDB
+        print("已完成修改") //檢查用
+        return showAlertMessage(title: "修改成功", message: "快去訂單明細檢查一下") //完成傳送提示訊息
+    }
     
     override func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()

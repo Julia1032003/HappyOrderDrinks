@@ -715,7 +715,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="message" id="7Ot-al-hTQ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="confirm" id="7Ot-al-hTQ">
                                         <rect key="frame" x="0.0" y="376" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Ot-al-hTQ" id="nVS-f2-iTd">
@@ -726,13 +726,23 @@
                                                     <rect key="frame" x="10" y="5" width="394" height="34"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7G-9S-g7X">
-                                                            <rect key="frame" x="0.0" y="1" width="394" height="32"/>
+                                                            <rect key="frame" x="0.0" y="1" width="197" height="32"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <state key="normal" title="確認訂購">
                                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="confirmButton:" destination="mKa-zR-6hk" eventType="touchUpInside" id="BDF-9Y-c6o"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnX-ua-621">
+                                                            <rect key="frame" x="197" y="1" width="197" height="32"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <state key="normal" title="確認修改">
+                                                                <color key="titleColor" red="0.1075160578" green="0.23286733030000001" blue="0.30164620279999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="editconfirmButton:" destination="mKa-zR-6hk" eventType="touchUpInside" id="bAL-ar-ZNW"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -758,9 +768,11 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="drinksPicker" destination="JNe-Wr-AhY" id="Ftv-gO-ACQ"/>
+                        <outlet property="editButtonUI" destination="DnX-ua-621" id="xkR-dv-Aco"/>
                         <outlet property="iceSegmentedControl" destination="UGK-uV-FVI" id="76H-Jz-71B"/>
                         <outlet property="messageTextField" destination="dID-fA-3zP" id="dly-jT-UkS"/>
                         <outlet property="nameTextField" destination="ehj-Rk-sNl" id="af7-V3-O0X"/>
+                        <outlet property="orderButtonUI" destination="y7G-9S-g7X" id="Evw-yg-I83"/>
                         <outlet property="priceLabel" destination="vmF-t8-ZQA" id="tzb-ZD-cdI"/>
                         <outlet property="sizeSegmentedControl" destination="WGm-5Z-G0w" id="T40-WP-7vi"/>
                         <outlet property="sugarSegmentedControl" destination="IKc-Be-ZPn" id="tXm-vI-QAg"/>
