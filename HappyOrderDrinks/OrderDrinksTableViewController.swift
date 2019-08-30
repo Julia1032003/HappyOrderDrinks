@@ -407,6 +407,8 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
                         NotificationCenter.default.post(name: Notification.Name("waitMessage"), object: nil, userInfo: ["message": true])
                     }
                     task.resume()
+                    NotificationCenter.default.post(name: Notification.Name("waitMessage"), object: nil, userInfo: ["message": false])
+                    self.navigationController?.popViewController(animated: true) // 返回訂購頁面
                 }
                 catch{
                 }
@@ -424,8 +426,8 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     @IBAction func editconfirmButton(_ sender: Any) {
         getEditOrder() //取得修改後訂單資料
         sendEditDrinksOrderToServer() //傳送修改完成資料至sheetDB
+
         print("已完成修改") //檢查用
-        return showAlertMessage(title: "修改成功", message: "快去訂單明細檢查一下") //完成傳送提示訊息
     }
     
     override func didReceiveMemoryWarning() {

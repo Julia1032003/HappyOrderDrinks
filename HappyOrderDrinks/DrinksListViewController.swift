@@ -34,6 +34,32 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
     func updateOrdersUI(){
             numberOfDrinksLabel.text = "\(ListArray.count)"
             }
+    
+    //畫面載入，取得訂單資料
+    override func viewDidLoad() {
+            super.viewDidLoad()
+            startLoadingList()
+            drinksListTableView.delegate = self
+            drinksListTableView.dataSource = self
+            // Do any additional setup after loading the view.
+        }
+    
+    override func viewDidAppear(_ animated: Bool) {
+           super.viewDidAppear(animated)
+           ListArray.removeAll()
+           getOrderList()
+    }
+        
+    //開始載入動畫
+    func startLoadingList(){
+            loadingActivityIndicator.startAnimating()
+        }
+        
+    //停止載入動畫
+    func stopLoadingList(){
+            loadingActivityIndicator.stopAnimating()
+            loadingActivityIndicator.hidesWhenStopped = true   // 當停止動畫後隱藏
+        }
 
             
     //得到要顯示的Cell，設定Cell的內容
@@ -70,27 +96,6 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
         performSegue(withIdentifier: "showedit", sender: indexPath)
     }
     
-    
-    //畫面載入，取得訂單資料
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        startLoadingList()
-        drinksListTableView.delegate = self
-        drinksListTableView.dataSource = self
-        getOrderList()
-        // Do any additional setup after loading the view.
-    }
-    
-    //開始載入動畫
-    func startLoadingList(){
-        loadingActivityIndicator.startAnimating()
-    }
-    
-    //停止載入動畫
-    func stopLoadingList(){
-        loadingActivityIndicator.stopAnimating()
-    }
-    
     //取得sheetDB訂單資料
     func getOrderList(){
                 let urlStr = "https://sheetdb.io/api/v1/co2xognew7ev0".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -112,7 +117,6 @@ class DrinksListViewController: UIViewController , UITableViewDataSource , UITab
                         // 更新TableView，UI的更新必須在Main thread
                         DispatchQueue.main.async {
                             self.stopLoadingList() //停止Loading動畫並且關閉圖示
-                            self.loadingActivityIndicator.alpha = 0
                             self.drinksListTableView.reloadData() // 更新訂購表
                             self.updateOrdersUI() // 更新訂購數量
                             self.updatePriceUI() // 更新總價

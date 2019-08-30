@@ -37,11 +37,11 @@ class ViewController: UIViewController {
                 }else{
                     print("無法開啟URL")
                 }
-            }else{
-                print("連結錯誤")
             }
-            print("error")
+            print("撥出成功")
         }
+            
+           
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(phoneAction)
         controller.addAction(cancelAction)
