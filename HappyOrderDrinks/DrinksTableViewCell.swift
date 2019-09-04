@@ -31,7 +31,7 @@ class DrinksTableViewCell: UITableViewCell {
             sizeLabel.text = "容量：\(cellinformation.size)"
             sugerLabel.text = "甜度：\(cellinformation.sugar)"
             iceLabel.text = "冰度：\(cellinformation.ice)"
-            tapiocaLabel.text = "加珍珠？\(cellinformation.tapioca)"
+            tapiocaLabel.text = "珍珠要嗎：\(cellinformation.tapioca)"
             priceLabel.text = "金額：\(cellinformation.price)"
             messageLabel.text = "備註：\(cellinformation.message)"
          

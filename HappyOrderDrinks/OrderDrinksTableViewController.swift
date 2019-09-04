@@ -21,7 +21,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     @IBOutlet var tapiocaSwitch: UISwitch!
     
     @IBOutlet var orderButtonUI: UIButton!
-    @IBOutlet var editButtonUI: UIButton!
+    @IBOutlet var editButtonUI: UIButton! 
     
     
     var teaorder = TeaChoicesData ()
@@ -69,9 +69,9 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
                  }
     
     //更新價格等同於選定的項目價格
-        func updatePriceUI() {
-                priceLabel.text = "NT. \(drinksData[teaIndex].price)"
-            }
+    func updatePriceUI() {
+        priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+    }
         
     //載入飲料訂單的資料
     func editOrderList(){
@@ -81,7 +81,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         sizeSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.size)
         sugarSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.sugar)
         iceSegmentedControl.selectedSegmentIndex = convertStringToIndex(str: editOrderData!.ice)
-        tapiocaSwitch.isOn = editOrderData?.tapioca == "要加珍珠" ? true : false
+        tapiocaSwitch.isOn = editOrderData?.tapioca == "要加" ? true : false
         messageTextField.text = editOrderData?.message
     }
     
@@ -146,19 +146,45 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
          teaIndex = row
          updatePriceUI()
-        //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格
-        
-        
+         updateSizeSegmentedControl()
+         updatetapiocaSelectSwitch()
+        //判斷現在選到的是第幾個，並依據選到的結果顯示對應的價格及初始容量為中杯、珍珠為off
     }
     
-    //容量大小的金額
+    //如果換飲料就更新容量為中杯
+    func updateSizeSegmentedControl(){
+          sizeSegmentedControl.selectedSegmentIndex = 1
+    }
+    
+    //如果換飲料就更新珍珠的Switch為off(不加珍珠)
+    func updatetapiocaSelectSwitch(){
+          tapiocaSwitch.isOn = false
+    }
+    
+    
+    
+    //容量大小的加價選項以及控制熟成檸果只能選中杯
     @IBAction func sizeSelectSegmentedControl(_ sender: UISegmentedControl) {
-            if sizeSegmentedControl.selectedSegmentIndex == 0 && drinksData.count >= 15 {
-                drinksPrice = drinksData[teaIndex].price+10
-            }else{
-                drinksPrice = drinksData[teaIndex].price+5
-            }
-            priceLabel.text = "NT. \(drinksPrice)"
+        
+            let name = ["春梅冰茶","冷露歐蕾","熟成歐蕾","白玉歐蕾"]
+                if name.contains(drinksData[teaIndex].name) && sizeSegmentedControl.selectedSegmentIndex == 0 {
+                    drinksPrice = drinksData[teaIndex].price+10
+                    print("加十元")
+                    priceLabel.text = "NT. \(drinksPrice)"
+                   }else if sizeSegmentedControl.selectedSegmentIndex == 0 {
+                    drinksPrice = drinksData[teaIndex].price+5
+                    print("加五元")
+                    priceLabel.text = "NT. \(drinksPrice)"
+                }else{
+                priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+                }
+        
+        if drinksData[teaIndex].name == "熟成檸果" {
+           showAlertMessage(title: "熟成檸果只有中杯喲",message: "請選擇中杯或是換飲料品項")
+           sizeSegmentedControl.selectedSegmentIndex = 1
+                    
+        }
+           
     }
 
     //加價購白玉珍珠
@@ -194,6 +220,11 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
            guard let name = nameTextField.text, name.count > 0 else{   // 檢查姓名是否輸入
                     return showAlertMessage(title: "忘記輸入你的名字囉!",message: "沒寫名字怎麼知道是誰點的啦XD")    // 顯示必須輸入的提示訊息
            }
+           if  drinksData[teaIndex].name == "熟成檸果" {
+               showAlertMessage(title: "熟成檸果只有中杯喲",message: "請選擇中杯或是換飲料品項")
+               return sizeSegmentedControl.selectedSegmentIndex = 1
+           }
+        
                         
             //姓名資料
             teaorder.name = name
@@ -249,9 +280,9 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
             
             //是否加珍珠
             if tapiocaSwitch.isOn {
-               teaorder.tapioca = "要加珍珠"
+               teaorder.tapioca = "要加"
             }else {
-               teaorder.tapioca = "不加珍珠"
+               teaorder.tapioca = "不加"
             }
             print("是否加購：\(teaorder.size)")
              
@@ -330,9 +361,9 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
                 
                 //是否加珍珠
                 if tapiocaSwitch.isOn {
-                   teaorder.tapioca = "要加珍珠"
+                   teaorder.tapioca = "要加"
                 }else {
-                   teaorder.tapioca = "不加珍珠"
+                   teaorder.tapioca = "不加"
                 }
                 print("是否加購：\(teaorder.size)")
                  

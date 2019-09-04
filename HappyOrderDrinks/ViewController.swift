@@ -16,9 +16,12 @@ class ViewController: UIViewController {
     
    
     func showDrinksStorePoint(){
+        
+        //可不可熟成紅茶的座標位置
         let location = CLLocation(latitude: 25.051138, longitude: 121.534933)
+        //回傳 MKCoordinateRegion 結構的參數，這個參數決定了螢幕要顯示區域的大小。
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
-            drinksStoreMKView.setRegion(region, animated: true)
+        drinksStoreMKView.setRegion(region, animated: true)
         let annotation = MyAnnotation(coordingnate: location.coordinate)
         annotation.title = "可不可熟成紅茶"
         annotation.subtitle = "台北伊通店"
