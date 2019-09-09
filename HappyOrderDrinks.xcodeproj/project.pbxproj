@@ -14,6 +14,7 @@
 		E1B2978B2305F7E500343580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B2978A2305F7E500343580 /* Assets.xcassets */; };
 		E1B2978E2305F7E500343580 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B2978C2305F7E500343580 /* LaunchScreen.storyboard */; };
 		E1B2979623060F8A00343580 /* IntroScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B2979523060F8A00343580 /* IntroScrollViewController.swift */; };
+		E1B4848E232603C8001DD1B7 /* MapModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1B4848C232603C8001DD1B7 /* MapModel.xcdatamodeld */; };
 		E1B59DD9230E867300E725B3 /* DrinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B59DD8230E867300E725B3 /* DrinksTableViewCell.swift */; };
 		E1B59DDD230E978D00E725B3 /* DrinksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B59DDC230E978D00E725B3 /* DrinksListViewController.swift */; };
 		E1E81B97230A7E8F00D935C8 /* OrderDrinksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */; };
@@ -32,6 +33,7 @@
 		E1B2978D2305F7E500343580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1B2978F2305F7E500343580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1B2979523060F8A00343580 /* IntroScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScrollViewController.swift; sourceTree = "<group>"; };
+		E1B4848D232603C8001DD1B7 /* MapModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapModel.xcdatamodel; sourceTree = "<group>"; };
 		E1B59DD8230E867300E725B3 /* DrinksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksTableViewCell.swift; sourceTree = "<group>"; };
 		E1B59DDC230E978D00E725B3 /* DrinksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksListViewController.swift; sourceTree = "<group>"; };
 		E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDrinksTableViewController.swift; sourceTree = "<group>"; };
@@ -76,13 +78,14 @@
 				E1B297852305F7E400343580 /* ViewController.swift */,
 				E1F08D1323179B730029A4DB /* DrinksStoreMap.swift */,
 				E1B297872305F7E400343580 /* Main.storyboard */,
+				E1B2978C2305F7E500343580 /* LaunchScreen.storyboard */,
 				E1B59DDC230E978D00E725B3 /* DrinksListViewController.swift */,
 				E1B59DD8230E867300E725B3 /* DrinksTableViewCell.swift */,
 				E1E81B96230A7E8F00D935C8 /* OrderDrinksTableViewController.swift */,
 				E1F54DEF230BC9320027F63D /* TeaData.swift */,
 				E1B2979523060F8A00343580 /* IntroScrollViewController.swift */,
 				E1B2978A2305F7E500343580 /* Assets.xcassets */,
-				E1B2978C2305F7E500343580 /* LaunchScreen.storyboard */,
+				E1B4848C232603C8001DD1B7 /* MapModel.xcdatamodeld */,
 				E1B2978F2305F7E500343580 /* Info.plist */,
 			);
 			path = HappyOrderDrinks;
@@ -168,6 +171,7 @@
 				E1E81B97230A7E8F00D935C8 /* OrderDrinksTableViewController.swift in Sources */,
 				E1F54DF0230BC9320027F63D /* TeaData.swift in Sources */,
 				E1B297842305F7E400343580 /* SceneDelegate.swift in Sources */,
+				E1B4848E232603C8001DD1B7 /* MapModel.xcdatamodeld in Sources */,
 				E1B59DDD230E978D00E725B3 /* DrinksListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,6 +370,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E1B4848C232603C8001DD1B7 /* MapModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E1B4848D232603C8001DD1B7 /* MapModel.xcdatamodel */,
+			);
+			currentVersion = E1B4848D232603C8001DD1B7 /* MapModel.xcdatamodel */;
+			path = MapModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E1B297762305F7E300343580 /* Project object */;
 }

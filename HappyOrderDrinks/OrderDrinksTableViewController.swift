@@ -71,6 +71,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
     //更新價格等同於選定的項目價格
     func updatePriceUI() {
         priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+        drinksPrice = drinksData[teaIndex].price
     }
         
     //載入飲料訂單的資料
