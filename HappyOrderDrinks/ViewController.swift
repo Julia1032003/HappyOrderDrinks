@@ -41,7 +41,9 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
             let currentLocation :CLLocation = locations[0] as CLLocation
             print("\(currentLocation.coordinate.latitude)")
             print(", \(currentLocation.coordinate.longitude)")
-
+            let showLocationannotation = MyAnnotation(coordingnate: currentLocation.coordinate)
+            showLocationannotation.title = "現在位置"
+            drinksStoreMKView.addAnnotation(showLocationannotation)
         }
     
     @IBAction func callActionButton(_ sender: Any) {
@@ -123,7 +125,7 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
         super.viewDidDisappear(animated)
 
         // 停止定位自身位置
-        //myLocationManager.stopUpdatingLocation()
+        myLocationManager.stopUpdatingLocation()
     }
     
        

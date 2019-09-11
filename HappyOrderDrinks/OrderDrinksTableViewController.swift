@@ -172,10 +172,13 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
                     drinksPrice = drinksData[teaIndex].price+10
                     print("加十元")
                     priceLabel.text = "NT. \(drinksPrice)"
-                   }else if sizeSegmentedControl.selectedSegmentIndex == 0 {
+                }else if drinksData[teaIndex].name == "熟成檸果"  {
+                    priceLabel.text = "NT. \(drinksData[teaIndex].price)"
+                }else if sizeSegmentedControl.selectedSegmentIndex == 0 {
                     drinksPrice = drinksData[teaIndex].price+5
                     print("加五元")
                     priceLabel.text = "NT. \(drinksPrice)"
+                
                 }else{
                 priceLabel.text = "NT. \(drinksData[teaIndex].price)"
                 }
@@ -183,7 +186,6 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
         if drinksData[teaIndex].name == "熟成檸果" {
            showAlertMessage(title: "熟成檸果只有中杯喲",message: "請選擇中杯或是換飲料品項")
            sizeSegmentedControl.selectedSegmentIndex = 1
-                    
         }
            
     }
@@ -224,6 +226,7 @@ class OrderDrinksTableViewController: UITableViewController , UIPickerViewDelega
            if  drinksData[teaIndex].name == "熟成檸果" {
                showAlertMessage(title: "熟成檸果只有中杯喲",message: "請選擇中杯或是換飲料品項")
                return sizeSegmentedControl.selectedSegmentIndex = 1
+                      
            }
         
                         
